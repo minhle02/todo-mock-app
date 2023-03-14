@@ -53,7 +53,11 @@ const DayPage = (props) => {
         { id: '2', title: "Play game" },
     ];
 
-    
+
+    //TODO: IMPLEMENT DELETE HANDLER
+    const deleteHandler = () => { };
+
+
     let today = new Date(props.date);
     today.setTime(today.getTime() + 14 * 60 * 60 * 1000); //convert local time to UTC
     const screenHandler = props.screenSwitch;
@@ -96,7 +100,7 @@ const DayPage = (props) => {
             </Ionicons.Button>
 
 
-            <MaterialCommunityIcons.Button name="delete" backgroundColor="black" onPress={null}>
+            <MaterialCommunityIcons.Button name="delete" backgroundColor="black" onPress={deleteHandler}>
                 Delete
             </MaterialCommunityIcons.Button>
         </View>

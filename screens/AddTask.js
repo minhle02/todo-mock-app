@@ -48,7 +48,7 @@ const AddTask = (props) => {
         </View>
 
         <View style={styles.contentWrapper}>
-            
+            {/* ADD INPUT FIELD IN HERE */}
         </View>
 
         <View style={styles.bottomButtonBar}>
