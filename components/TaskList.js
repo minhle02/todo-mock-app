@@ -18,15 +18,19 @@ const windowHeight = Dimensions.get('window').height;
 
 const TaskList = (props) => {
   const [selectedId, setSelectedId] = useState();
+  const setDelete = props.setDelete;
 
   const renderItem = ({item}) => {
     const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff';
     const color = item.id === selectedId ? 'white' : 'black';
-
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => {
+          setSelectedId(item.id)
+          setDelete(item.id)
+          console.log(item.id);
+        }}
         backgroundColor={backgroundColor}
         textColor={color}
       />

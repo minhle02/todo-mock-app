@@ -7,11 +7,11 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import TaskList from '../components/TaskList';
 
 
-const taskList = [
+/* const taskList = [
     { id: 0, content: "Do Math" },
     { id: 1, content: "Do Chemistry" },
     { id: 2, content: "Play game" },
-];
+]; */
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
@@ -43,24 +43,36 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     }
 })
-const DayPage = (props) => {
-    //Date info is in props.date
-    //Query data!!!
-    //Dummy tasklist
-    const taskList = [
-        { id: '0', title: "Do Math" },
-        { id: '1', title: "Do Chemistry" },
-        { id: '2', title: "Play game" },
-    ];
 
+
+//Date info is in props.date
+//Query data!!!
+//Dummy tasklist
+let taskList = [
+    { id: '0', title: "Do Math" },
+    { id: '1', title: "Do Chemistry" },
+    { id: '2', title: "Play game" },
+];
+    
+
+const DayPage = (props) => {
+    const screenHandler = props.screenSwitch;
+    const [deleteItem, setDeleteItem] = useState();
+    const [taskToAdd, setTaskToAdd] = useState();
 
     //TODO: IMPLEMENT DELETE HANDLER
-    const deleteHandler = () => { };
-
+    const deleteHandler = () => {
+        if (deleteItem !== undefined) {
+            //console.log("Item to delete " + deleteItem);
+            taskList = taskList.filter(item => item.id != deleteItem);
+            console.log(taskList)
+            screenHandler({screen: 2, arg: props.date});
+        }
+    };
 
     let today = new Date(props.date);
     today.setTime(today.getTime() + 14 * 60 * 60 * 1000); //convert local time to UTC
-    const screenHandler = props.screenSwitch;
+    
     
     return <SafeAreaView style={styles.container}>
         <StatusBar></StatusBar>
@@ -71,7 +83,7 @@ const DayPage = (props) => {
         </View>
 
         <View style={styles.contentWrapper}>
-            <TaskList tasklist={taskList} />
+            <TaskList tasklist={taskList} setDelete={setDeleteItem} />
         </View>
 
         <View style={styles.bottomButtonBar}>

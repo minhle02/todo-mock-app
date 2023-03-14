@@ -7,7 +7,7 @@ import {Button, Pressable, View, Text} from 'react-native'
 
 
 const NavigationScreen = () => {
-    const [DisplayScreen, setDisplayScreen] = useState({ screen: 1, arg: "" });
+    const [DisplayScreen, setDisplayScreen] = useState({ screen: 3, arg: "" });
     let screenNum = DisplayScreen.screen;
     switch (screenNum) {
         case 1:
