@@ -1,9 +1,10 @@
 //Screen 2
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, Dimensions, FlatList } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import TaskList from '../components/TaskList';
 
 
 const taskList = [
@@ -47,11 +48,12 @@ const DayPage = (props) => {
     //Query data!!!
     //Dummy tasklist
     const taskList = [
-        { id: 0, content: "Do Math" },
-        { id: 1, content: "Do Chemistry" },
-        { id: 2, content: "Play game" },
+        { id: '0', title: "Do Math" },
+        { id: '1', title: "Do Chemistry" },
+        { id: '2', title: "Play game" },
     ];
 
+    
     let today = new Date(props.date);
     today.setTime(today.getTime() + 14 * 60 * 60 * 1000); //convert local time to UTC
     const screenHandler = props.screenSwitch;
@@ -63,9 +65,11 @@ const DayPage = (props) => {
                 {today.toDateString()}
             </Text>
         </View>
+
         <View style={styles.contentWrapper}>
-            
+            <TaskList tasklist={taskList} />
         </View>
+
         <View style={styles.bottomButtonBar}>
             {/* Home Button */}
             <Ionicons.Button
