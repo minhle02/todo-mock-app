@@ -35,16 +35,13 @@ const SearchPage = (props) => {
       width: windowWidth,
     }
   })
-  let today = '2023-03-12';
-  //const [chosenDay, setChosenDay] = useState(today);
-  let dummyMark = {[today] : { selected: true, marked: true, selectedColor: 'lightblue' }}
+  
   let calendar = <Calendar style={calendarStyle.calendarMenu}
     onDayPress={(day) => {
         console.log('selected day', day);
         const screenHandler = props.screenSwitch;
         screenHandler({screen: 2, arg: day.timestamp})
     }}
-    markedDates={dummyMark}
   >
     
   </Calendar>;

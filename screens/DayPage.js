@@ -33,14 +33,14 @@ const styles = StyleSheet.create({
         width: windowWidth,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'lightgreen',
+        backgroundColor: 'white',
     },
     bottomButtonBar: {
         flex: 1,
         width: windowWidth,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'pink',
+        backgroundColor: 'white',
         flexDirection: 'row',
     }
 })
@@ -87,9 +87,6 @@ const DayPage = (props) => {
     //TODO: IMPLEMENT DELETE HANDLER
     const deleteHandler = () => {
         if (deleteItem !== -1) {
-            //console.log("Item to delete " + deleteItem);
-            //taskList = taskList.filter(item => item.id != deleteItem);
-            //console.log(taskList)
             deleteTaskById(deleteItem);
             setTaskList(taskList.filter(item => item.id != deleteItem))
             screenHandler({screen: 2, arg: props.date});

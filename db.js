@@ -8,7 +8,8 @@ const initDatabase = () => {
             let sqlcmd = "create table if not exists tasks (";
             sqlcmd += "id integer primary key autoincrement, ";
             sqlcmd += "content text, ";
-            sqlcmd += "date text)";
+            sqlcmd += "date text ";
+            sqlcmd += "month text"
             tx.executeSql(sqlcmd);
         })
 
@@ -24,8 +25,8 @@ const initDatabase = () => {
 const addTaskOnDay = (day, task) => {
     const db = SQLite.openDatabase("taskData.db");
         db.transaction(tx => {
-            let sqlcmd = "insert into tasks (content,date) values (?,?)";
-            tx.executeSql(sqlcmd, [task, day],
+            let sqlcmd = "insert into tasks (content, date) values (?,?)";
+            tx.executeSql(sqlcmd, [task, day,],
                 (_, resultSet) => {
                     console.log("Added successful: ", JSON.stringify(resultSet));
                 }
@@ -36,16 +37,6 @@ const addTaskOnDay = (day, task) => {
 
 const deleteTaskById = (id) => {
     const db = SQLite.openDatabase("taskData.db");
-    /* useEffect(() => {
-        db.transaction(tx => {
-            let sqlcmd = "delete from tasks where id = ?";
-            tx.executeSql(sqlcmd, [id],
-                (_, resultSet) => {
-                    console.log("Delete successful: ", JSON.stringify(resultSet));
-                }
-            )
-        })
-    },[]) */
     db.transaction(tx => {
             let sqlcmd = "delete from tasks where id = ?";
             tx.executeSql(sqlcmd, [id],

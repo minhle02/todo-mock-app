@@ -26,21 +26,27 @@ const styles = StyleSheet.create({
         width: windowWidth,
         justifyContent: 'center',
         alignItems: 'flex-start',
-        backgroundColor: 'lightgreen',
+        backgroundColor: 'white',
     },
     bottomButtonBar: {
         flex: 1,
         width: windowWidth,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'pink',
+        backgroundColor: 'white',
         flexDirection: 'row',
     },
     inputText: {
         borderWidth: 1,
         width: '95%',
         margin: 10,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        height: '6%',
+        fontSize: 25
+    },
+    titleField: {
+        fontSize: 20,
+        marginTop: 12
     }
 })
 
@@ -86,14 +92,14 @@ const AddTask = (props) => {
         </View>
 
         <View style={styles.contentWrapper}>
-            <Text>Date:</Text>
+            <Text style={styles.titleField}>Date:</Text>
             <TextInput
                 style={styles.inputText}     
                 value={dateInput}
                 onChangeText={setDateInput}
             />
 
-            <Text>Task:</Text>
+            <Text style={styles.titleField}>Task:</Text>
             <TextInput
                 style={styles.inputText}
                 placeholder="What to do"
