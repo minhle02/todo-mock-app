@@ -9,7 +9,7 @@ import {
 
 const Item = ({item, onPress, backgroundColor, textColor}) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
-    <Text style={[styles.title, {color: textColor}]}>{item.title}</Text>
+    <Text style={[styles.title, {color: textColor}]}>{item.content}</Text>
   </TouchableOpacity>
 );
 

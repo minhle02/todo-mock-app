@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, SafeAreaView, Dimensions, TextInput } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { addTaskOnDay } from '../db';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -46,12 +47,35 @@ const styles = StyleSheet.create({
 const AddTask = (props) => {
     const screenHandler = props.screenSwitch;
 
-    //Text Input
-    let date = new Date(Date.now());
+    let date;
+
+    if (props.date === undefined || props.date === "") {
+        date = new Date(Date.now());
+    }
+    date = new Date(props.date);
     date.setTime(date.getTime() + 60 * 60 * 1000 * 14);
 
-    const [dateInput, setDateInput] = useState("3/12/23");
+    let dayDB = date.getDate();
+    dayDB = (dayDB >= 10) ? dayDB.toString() : ("0" + dayDB.toString());
+
+    let monthDB = date.getMonth() + 1;
+    monthDB = (monthDB >= 10) ? monthDB.toString() : ("0" + monthDB.toString());
+    let yearDB = date.getFullYear().toString();
+    let dayString = yearDB + "-" + monthDB + "-" + dayDB;
+
+    const [dateInput, setDateInput] = useState(dayString);
     const [taskInput, setTaskInput] = useState();
+
+    const submitHandler = () => {
+        let regex = new RegExp("[0-9]{4}-[0-1][0-9]-[0-3][0-9]");
+        if (regex.test(dateInput) && taskInput !== undefined && taskInput !== "") {
+            addTaskOnDay(dateInput, taskInput);
+            screenHandler({ screen: 1, arg: "" });
+        }
+        console.log(taskInput)
+        console.log(regex.test(dateInput))
+        console.log(dateInput)
+    }
 
     return <SafeAreaView style={styles.container}>
         <StatusBar></StatusBar>
@@ -91,9 +115,7 @@ const AddTask = (props) => {
             <Ionicons.Button
                 name="checkmark-circle"
                 backgroundColor="black"
-                onPress={() => {
-                    
-                }}
+                onPress={submitHandler}
             >
                 Submit
             </Ionicons.Button>

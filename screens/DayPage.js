@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, SafeAreaView, Dimensions, FlatList } from 'reac
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import TaskList from '../components/TaskList';
+import { getTaskByDay, deleteTaskById } from '../db';
 
 
 /* const taskList = [
@@ -48,30 +49,53 @@ const styles = StyleSheet.create({
 //Date info is in props.date
 //Query data!!!
 //Dummy tasklist
-let taskList = [
-    { id: '0', title: "Do Math" },
-    { id: '1', title: "Do Chemistry" },
-    { id: '2', title: "Play game" },
-];
+// let taskList = [
+//     { id: '0', content: "Do Math" },
+//     { id: '1', content: "Do Chemistry" },
+//     { id: '2', content: "Play game" },
+// ];
     
 
 const DayPage = (props) => {
     const screenHandler = props.screenSwitch;
-    const [deleteItem, setDeleteItem] = useState();
+    const [deleteItem, setDeleteItem] = useState(-1);
     const [taskToAdd, setTaskToAdd] = useState();
+
+    // if (deleteItem != -1) {
+    //     deleteTaskById(deleteItem);
+    //     setDeleteItem(-1);
+    // }
+    const [taskList, setTaskList] = useState([
+        { id: '0', content: "Do Math" },
+        { id: '1', content: "Do Chemistry" },
+        { id: '2', content: "Play game" },
+    ]);
+
+    let today = new Date(props.date);
+    today.setTime(today.getTime() + 14 * 60 * 60 * 1000); //convert local time to UTC
+
+    let dayDB = today.getDate();
+    dayDB = (dayDB >= 10) ? dayDB.toString() : ("0" + dayDB.toString());
+
+    let monthDB = today.getMonth() + 1;
+    monthDB = (monthDB >= 10) ? monthDB.toString() : ("0" + monthDB.toString());
+    let yearDB = today.getFullYear().toString();
+    let dayString = yearDB + "-" + monthDB + "-" + dayDB;
+    
+    getTaskByDay(dayString, setTaskList);
 
     //TODO: IMPLEMENT DELETE HANDLER
     const deleteHandler = () => {
-        if (deleteItem !== undefined) {
+        if (deleteItem !== -1) {
             //console.log("Item to delete " + deleteItem);
-            taskList = taskList.filter(item => item.id != deleteItem);
-            console.log(taskList)
+            //taskList = taskList.filter(item => item.id != deleteItem);
+            //console.log(taskList)
+            deleteTaskById(deleteItem);
+            setTaskList(taskList.filter(item => item.id != deleteItem))
             screenHandler({screen: 2, arg: props.date});
         }
     };
 
-    let today = new Date(props.date);
-    today.setTime(today.getTime() + 14 * 60 * 60 * 1000); //convert local time to UTC
     
     
     return <SafeAreaView style={styles.container}>
